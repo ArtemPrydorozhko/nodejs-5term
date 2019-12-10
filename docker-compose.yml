@@ -1,0 +1,18 @@
+version: '3'
+services: 
+    db:
+        image: mysql
+        ports:
+            - ${DBPORT}:${DBPORT}
+        environment: 
+            - MYSQL_DATABASE=${DBDATABASE}
+            - MYSQL_ROOT_PASSWORD=${DBPASSWORD}
+    authservice:
+        build: 
+            context: ./AuthService
+        restart: always
+        env_file: ./.env
+        ports: 
+            - ${AUTHPORT}:${AUTHPORT}
+        depends_on: 
+            - db

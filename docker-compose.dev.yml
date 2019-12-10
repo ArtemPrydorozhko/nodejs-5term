@@ -1,0 +1,23 @@
+version: '3'
+services: 
+    db:
+        image: mysql
+        ports:
+            - ${DBPORT}:${DBPORT}
+        environment: 
+            - MYSQL_DATABASE=${DBDATABASE}
+            - MYSQL_ROOT_PASSWORD=${DBPASSWORD}
+            # > docker exec -it e08a5c9777c1 mysql -uroot -p
+    authservice:
+        build: 
+            context: ./AuthService
+            dockerfile: Dockerfile.dev
+        restart: always
+        env_file: ./.env
+        ports: 
+            - ${AUTHPORT}:${AUTHPORT}
+        volumes:
+            - /usr/app/node_modules
+            - ./AuthService:/usr/app
+        depends_on: 
+            - db
