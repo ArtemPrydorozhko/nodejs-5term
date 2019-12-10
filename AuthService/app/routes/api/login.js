@@ -1,20 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const User = require('../../database/dao/user');
-
-// const auth = require('../middleware/auth');
-
-router.get('/all', async (req, res) => {
-    try {
-        const user = await User.getUsers();
-
-        res.status(200).json(user);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+const User = require('../../../../shared/database/models/user');
 
 router.post('/login', async (req, res) => {
     try {
@@ -44,9 +31,5 @@ router.post('/signup', async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
-
-// router.post('/logout', auth, async(req, res) => {
-
-// });
 
 module.exports = router;

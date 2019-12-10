@@ -10,8 +10,8 @@ services:
             # > docker exec -it e08a5c9777c1 mysql -uroot -p
     authservice:
         build: 
-            context: ./AuthService
-            dockerfile: Dockerfile.dev
+            context: .
+            dockerfile: AuthService/Dockerfile.dev
         restart: always
         env_file: ./.env
         ports: 
@@ -19,5 +19,18 @@ services:
         volumes:
             - /usr/app/node_modules
             - ./AuthService:/usr/app
+        depends_on: 
+            - db
+    userservice:
+        build: 
+            context: .
+            dockerfile: UserService/Dockerfile.dev
+        restart: always
+        env_file: ./.env
+        ports: 
+            - ${USERPORT}:${USERPORT}
+        volumes:
+            - /usr/app/node_modules
+            - ./UserService:/usr/app
         depends_on: 
             - db

@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const config = require('../../../config/config');
+const config = require('../../config/config');
 const jwt = require('jsonwebtoken');
 
 const roles = {
@@ -41,12 +41,12 @@ async function deleteUser(user) {
     });
 }
 
-async function updateUser(user) {
+async function updateUser(user, id) {
     const usr = await User.update(
         user,
         {
             where: {
-                id: user.id
+                id
             }
         });
 
