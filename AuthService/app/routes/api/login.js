@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const User = require('../../../../shared/database/models/user');
+const User = require('../../database/dao/user');
 
 router.post('/login', async (req, res) => {
     try {

@@ -1,5 +1,5 @@
 const redis = require('redis');
-const config = require('../../../config/config');
+const config = require('../../config/config');
 
 let redisClient;
 try {

@@ -11,7 +11,7 @@ async function createPost(post, userId) {
 }
 
 async function getPostById(id) {
-    return await Post.findByPk(id);
+    const result = await Post.findByPk(id);
 
     return result.dataValues;
 }
@@ -37,17 +37,19 @@ async function deletePost(post) {
         }
     });
 
-    return result.dataValues;
+    return result;
 }
 
 async function updatePost(post, id) {
-    const result = await Post.update(
+    await Post.update(
         post,
         {
             where: {
                 id
             }
         });
+
+    const result = Post.findByPk(id);
 
     return result.dataValues;
 }

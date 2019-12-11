@@ -1,7 +1,6 @@
 FROM node:alpine
 WORKDIR /usr/app
-COPY ./AuthService/package.json .
+COPY ./package.json .
 RUN npm install
-COPY ./AuthService .
-COPY ./shared .
+COPY . .
 CMD [ "npm", "run", "dev"]

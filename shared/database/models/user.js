@@ -2,6 +2,8 @@ const sequelize = require('../connection/sequelize');
 const Sequelize = require('sequelize');
 
 const Post = require('./post');
+const Comment = require('./comment');
+const Like = require('./like');
 
 const User = sequelize.define("user", {
     id: {
@@ -37,5 +39,7 @@ const User = sequelize.define("user", {
 });
 
 User.hasMany(Post, { onDelete: "cascade" });
+User.hasMany(Comment, { onDelete: "cascade" });
+User.hasMany(Like, { onDelete: "cascade" });
 
 module.exports = User;

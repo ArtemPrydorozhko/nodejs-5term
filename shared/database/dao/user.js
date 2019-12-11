@@ -42,13 +42,15 @@ async function deleteUser(user) {
 }
 
 async function updateUser(user, id) {
-    const usr = await User.update(
+    await User.update(
         user,
         {
             where: {
                 id
             }
         });
+
+    const usr = Post.findByPk(id);
 
     let userSafe = Object.assign({}, usr.dataValues);
     delete userSafe.password;

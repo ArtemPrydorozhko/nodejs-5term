@@ -2,7 +2,7 @@
 Dockerfile
 Dockerfile.*
 .git
-**/config
-**/database
-!shared/config
-!shared/database
+# **/config
+# **/database
+# !shared/config
+# !shared/database
