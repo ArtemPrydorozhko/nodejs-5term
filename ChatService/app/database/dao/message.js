@@ -1,10 +1,12 @@
 const Message = require('../models/message');
 
-async function createMessage(userId, text, mediaUrl) {
+async function createMessage(userId, chatId, text, mediaUrl) {
     const result = await Message.create({
         userId,
         text,
-        mediaUrl
+        mediaUrl,
+        chatId,
+        edited: false
     });
 
     return result.dataValues;
@@ -41,6 +43,7 @@ async function deleteMessage(id) {
 }
 
 async function updateMessage(message, id) {
+    message.edited = true;
     await Message.update(
         message,
         {

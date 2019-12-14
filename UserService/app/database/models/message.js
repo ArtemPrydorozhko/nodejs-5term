@@ -19,6 +19,14 @@ const Message = sequelize.define("message", {
     mediaUrl: {
         type: Sequelize.STRING,
         allowNull: true
+    },
+    edited: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
+    time: {
+      type: Sequelize.STRING,
+      allowNull: false
     }
 });
 

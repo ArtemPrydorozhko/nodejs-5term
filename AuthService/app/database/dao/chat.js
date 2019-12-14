@@ -36,7 +36,8 @@ async function getChats() {
 }
 
 async function deleteChat(id) {
-    const result = await Chat.destroy({
+    const result = await getChatById(id);
+    await Chat.destroy({
         where: {
             id
         }

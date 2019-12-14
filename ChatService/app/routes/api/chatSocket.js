@@ -1,35 +1,46 @@
-const Message = require('../../database/dao/message');
+const redisClient = require('../../database/connection/redis');
+const chatSub = redisClient.duplicate();
+chatSub.subscribe('new chat');
+chatSub.subscribe('leave chat');
 
 async function socketHandler(socket) {
-    // redis -> online status
-    const chats = []; // from redis
-    const groupChats = []; // from redis
-    chats.forEach((chat) => {
-        socket.join(chat);
-    });
-    groupChats.forEach((chat) => {
-        socket.join(chat);
-    });
+    let userId;
+    let chats = [];
+    let groupChats = [];
 
-    socket.on('join chat', (data) => {
-        // add to redis
-        const id = data.id.toString();
-        socket.join(id);
-    });
-
-    socket.on('leave chat', (data) => {
-        // add to redis
-        const id = data.id.toString();
-        socket.leave(id);
-    });
-
-    socket.on('send chat message', (data) => {
-        const id = data.id.toString();
-        Message.createMessage()
-        socket.to(id).emit('message', { message: data.message })
+    socket.on('connect', (data) => {
+        userId = data.id.toString();
+        redisClient.sadd('online', userId);
+        redisClient.smembers('chat:' + userId, (userChats) => {
+            chats = chats.concat(userChats);
+            chats.forEach((chat) => {
+                socket.join(chat);
+            });
+        });
+        redisClient.smembers('groupChat:' + userId, (userGroupChats) => {
+            groupChats = groupChats.concat(userGroupChats);
+            groupChats.forEach((chat) => {
+                socket.join(chat);
+            });
+        });
     });
 
     socket.on('disconnect', () => {
-        // redis -> offline st    
+        redisClient.srem('online', userId);  
+    });
+
+    chatSub.on('message', function (channel, message) {
+        const message = JSON.parse(message);
+        if (channel === 'new chat') {
+            if (message.user1Id === userId || message.user2Id === userId) {
+                socket.join(message.chatId);
+            }
+        } else if (channel === 'leave chat') {
+            if (message.user1Id === userId || message.user2Id === userId) {
+                socket.leave(message.chatId);
+            }
+        }
     });
 }
+
+module.exports = socketHandler;

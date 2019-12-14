@@ -77,7 +77,8 @@ router.post('/message', async (req, res) => {
             text: message.text,
             time: message.time,
             firstname: user.firstname,
-            lastname: user.lastname
+            lastname: user.lastname,
+            chatId: req.body.chatId
         });
         res.status(200).json(message);
     } catch (error) {

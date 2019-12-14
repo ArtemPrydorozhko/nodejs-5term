@@ -8,6 +8,10 @@ services:
             - MYSQL_DATABASE=${DBDATABASE}
             - MYSQL_ROOT_PASSWORD=${DBPASSWORD}
             # > docker exec -it e08a5c9777c1 mysql -uroot -p
+    redis:
+        image: redis
+        ports:
+            - ${REDIS_PORT}:${REDIS_PORT}
     authservice:
         build: 
             context: ./AuthService
@@ -21,6 +25,7 @@ services:
             - ./AuthService:/usr/app
         depends_on: 
             - db
+            - redis
     userservice:
         build: 
             context: ./UserService
@@ -34,3 +39,18 @@ services:
             - ./UserService:/usr/app
         depends_on: 
             - db
+            - redis
+    userservice:
+        build: 
+            context: ./ChatService
+            dockerfile: Dockerfile.dev
+        restart: always
+        env_file: ./.env
+        ports: 
+            - ${CHATPORT}:${CHATPORT}
+        volumes:
+            - /usr/app/node_modules
+            - ./ChatService:/usr/app
+        depends_on: 
+            - db
+            - redis

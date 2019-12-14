@@ -11,6 +11,7 @@ app.use(express.json());
 
 const chatRoutes = require('./app/routes/api/chat');
 const groupChatRoutes = require('./app/routes/api/groupChat');
+const socketHandler = require('./app/routes/api/chatSocket');
 
 app.use(auth);
 app.use(function (err, req, res, next) {
@@ -22,33 +23,7 @@ app.use(function (err, req, res, next) {
 app.use('/api/chatservice', chatRoutes);
 app.use('/api/chatservice', groupChatRoutes);
 
-io.on('connection', (socket) => {
-    // redis -> online status
-    const chats = []; // from redis
-    const groupChats = []; // from redis
-    chats.forEach((chat) => {
-        socket.join(chat);
-    });
-    groupChats.forEach((chat) => {
-        socket.join(chat);
-    });
-
-    socket.on('join chat', (data) => {
-        // add to redis
-        const id = data.id.toString();
-        socket.join(id);
-    });
-
-    socket.on('leave chat', (data) => {
-        // add to redis
-        const id = data.id.toString();
-        socket.leave(id);
-    });
-
-    socket.on('disconnect', () => {
-        // redis -> offline st    
-    });
-});
+io.on('connection', socketHandler);
 
 sequelize.sync().then(() => {
     server.listen(config.chatPort, () => {
