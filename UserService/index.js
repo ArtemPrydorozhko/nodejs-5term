@@ -11,8 +11,6 @@ const userRoutes = require('./app/routes/api/user');
 const postRoutes = require('./app/routes/api/post');
 app.use(auth);
 app.use(function (err, req, res, next) {
-    console.log(req.user);
-
     if (err.name === 'UnauthorizedError') {
         res.status(401).json({ error: 'invalid token' });
     }

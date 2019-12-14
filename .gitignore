@@ -46,7 +46,7 @@ testem.log
 Thumbs.db
 
 .env
-**/database
-**/config
-!shared/config
-!shared/database
+# **/database
+# **/config
+# !shared/config
+# !shared/database
