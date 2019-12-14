@@ -1,0 +1,5 @@
+/node_modules
+Dockerfile
+.git
+app/config
+app/database
