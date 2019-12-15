@@ -29,8 +29,8 @@ async function socketHandler(socket) {
         redisClient.srem('online', userId);  
     });
 
-    chatSub.on('message', function (channel, message) {
-        const message = JSON.parse(message);
+    chatSub.on('message', function (channel, msg) {
+        const message = JSON.parse(msg);
         if (channel === 'new chat') {
             if (message.user1Id === userId || message.user2Id === userId) {
                 socket.join(message.chatId);

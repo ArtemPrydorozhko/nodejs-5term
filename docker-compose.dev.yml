@@ -12,6 +12,30 @@ services:
         image: redis
         ports:
             - ${REDIS_PORT}:${REDIS_PORT}
+    nginx:
+        restart: always
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./nginx
+        ports: 
+            - '3000:80'
+        environment: 
+            - AUTHPORT=${AUTHPORT}
+            - USERPORT=${USERPORT}
+            - CHATPORT=${CHATPORT}
+        depends_on: 
+            - authservice
+            - userservice
+            - chatservice
+    client:
+        build:
+            context: ./client
+            dockerfile: Dockerfile.dev
+        volumes:
+            - /usr/app/node_modules
+            - ./client:/usr/app
+        ports: 
+            - '49153:49153'
     authservice:
         build: 
             context: ./AuthService
@@ -40,7 +64,7 @@ services:
         depends_on: 
             - db
             - redis
-    userservice:
+    chatservice:
         build: 
             context: ./ChatService
             dockerfile: Dockerfile.dev

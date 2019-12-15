@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const config = require('../../config/config');
+const config = require('../../../config/config');
 const jwt = require('jsonwebtoken');
 
 const roles = {

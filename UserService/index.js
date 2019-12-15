@@ -2,9 +2,11 @@ const express = require('express');
 const config = require('./config/config');
 const app = express();
 const auth = require('./app/routes/middleware/auth');
+const cors = require('cors');
 
 const sequelize = require('./app/database/connection/sequelize');
 
+app.use(cors());
 app.use(express.json());
 
 const userRoutes = require('./app/routes/api/user');

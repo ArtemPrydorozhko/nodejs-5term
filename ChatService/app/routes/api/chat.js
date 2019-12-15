@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const redisClient = require('../../database/connection/redis');
-const chatPub = redis.duplicate();
+const chatPub = redisClient.duplicate();
 const Chat = require('../../database/dao/chat');
 
 router.get('/chat/all', async (req, res) => {

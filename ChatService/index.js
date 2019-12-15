@@ -4,9 +4,11 @@ const app = require('./socket').app;
 const auth = require('./app/routes/middleware/auth');
 const server = require('./socket').server;
 const io = require('./socket').io;
+const cors = require('cors');
 
 const sequelize = require('./app/database/connection/sequelize');
 
+app.use(cors());
 app.use(express.json());
 
 const chatRoutes = require('./app/routes/api/chat');

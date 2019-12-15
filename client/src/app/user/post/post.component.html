@@ -1,0 +1,18 @@
+<div class="row post">
+    <div class="col-12">
+        <button class="btn btn-danger post__remove-btn" (click)="onDeletePost()">X</button>
+        <div class="post__image-wrapper">
+            <img *ngIf="post.mediaUrl" class="post__image" src="{{ post.mediaUrl }}" alt="{{ post.text }}">
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ post.text }}</p>
+            <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+        </div>
+        <div class="post__likes">
+            <button type="button" class="btn post__like" (click)="onLike()"
+            [ngClass]="{ 'btn-outline-success': !isLiked(),'btn-success': isLiked()}">Like: {{ post.likes }}</button>
+            <button type="button" class="btn post__like" (click)="onDislike()"
+            [ngClass]="{ 'btn-outline-danger': !isDisliked(),'btn-danger': isDisliked()}">Dislike: {{ post.dislikes }}</button>
+        </div>
+    </div>
+</div>
