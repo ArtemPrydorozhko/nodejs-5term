@@ -18,7 +18,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-10">
-                <form [formGroup]="newPost">
+                <form [formGroup]="newPost" (ngSubmit)="onCreatePost()">
                     <legend>New Post</legend>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -26,20 +26,21 @@
                         </div>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="inputFile" aria-describedby="inputFile"
-                                accept="image/*">
-                            <label class="custom-file-label" for="inputFile">Choose image</label>
+                                accept="image/*"  (change)="uploadFile($event)">
+                            <label class="custom-file-label" for="inputFile" #imageLabel>Choose image</label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" id="posttext" rows="3"></textarea>
-                      </div>
+                        <textarea class="form-control" id="posttext" rows="3" formControlName="text"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success float-right" [disabled]="newPost.invalid">Create</button>
                 </form>
             </div>
         </div>
+        <hr>
         <div class="row justify-content-center">
             <div class="col-10">
-                <app-post *ngFor="let post of posts" [post]="post"
-                    (deletePost)="onDeletePost($event)"></app-post>
+                <app-post *ngFor="let post of posts" [post]="post" (deletePost)="onDeletePost($event)"></app-post>
             </div>
         </div>
     </div>
