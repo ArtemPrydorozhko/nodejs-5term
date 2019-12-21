@@ -14,10 +14,13 @@ router.get('/post/all', async (req, res) => {
     }
 });
 
-router.get('/post', async (req, res) => {
+router.get('/post/user/:userId', async (req, res) => {
     try {
-        const posts = await Post.getPostsByUserId(req.user.id);
-
+        console.log(req.params.userId, req.user.id);
+        
+        const posts = await Post.getPostsByUserId(req.params.userId, req.user.id);
+        console.log(posts);
+        
         res.status(200).json(posts);
     } catch (error) {
         console.log(error);
@@ -63,6 +66,8 @@ router.delete('/post/:id', async (req, res) => {
 
 router.post('/post', async (req, res) => {
     try {
+        console.log(req.user);
+        
         const post = await Post.createPost(req.body, req.user.id);
 
         res.status(200).json(post);

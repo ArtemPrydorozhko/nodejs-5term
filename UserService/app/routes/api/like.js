@@ -41,6 +41,8 @@ router.put('/like/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const like = await Like.updateLike(req.body, id);
+        console.log(like);
+        
 
         res.status(200).json(like);
     } catch (error) {
@@ -62,7 +64,7 @@ router.delete('/like/:id', async (req, res) => {
 });
 
 router.post('/like', async (req, res) => {
-    try {
+    try {    
         const like = await Like.createLike(req.body.type, req.user.id, req.body.postId);
 
         res.status(200).json(like);

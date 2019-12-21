@@ -15,20 +15,28 @@ export class TokenService {
    }
 
   public setToken(token: string) {
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
     const decoded = this.JWTHelper.decodeToken(token);
-    localStorage.setItem('decodedToken', decoded);
+    sessionStorage.setItem('decodedToken', JSON.stringify(decoded));
   }
 
   public getToken(): string {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
   public getDecodedToken(): User {
-    return JSON.parse(localStorage.getItem('decodedToken'));
+    return JSON.parse(sessionStorage.getItem('decodedToken'));
+  }
+
+  public getUserId(): number {
+    return JSON.parse(sessionStorage.getItem('decodedToken')).id;
   }
 
   public isAuthorized(): boolean {
-    return localStorage.getItem('token') ? true : false;
+    return sessionStorage.getItem('token') ? true : false;
+  }
+
+  public deleteToken() {
+    sessionStorage.clear();
   }
 }

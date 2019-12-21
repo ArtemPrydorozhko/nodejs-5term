@@ -13,7 +13,7 @@ async function createUser(user) {
         lastname: user.lastname,
         email: user.email,
         password: user.password,
-        userRole: roles.admin
+        userRole: roles.user
     });
     let userSafe = Object.assign({}, usr.dataValues);
 
@@ -49,8 +49,6 @@ async function updateUser(user, id) {
                 id
             }
         });
-
-    const usr = Post.findByPk(id);
 
     let userSafe = Object.assign({}, usr.dataValues);
     delete userSafe.password;

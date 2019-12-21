@@ -1,22 +1,32 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UserComponent } from './user/user.component';
+import { UsersComponent } from './user/users.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { HomeComponent } from './user/home/home.component';
+import { FriendsComponent } from './friends/friends.component';
+import { UserComponent } from './user/user/user.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: UserComponent,
+    component: UsersComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
       {
         path: 'home',
         component: HomeComponent
+      },
+      {
+        path: 'friends',
+        component: FriendsComponent
+      },
+      {
+        path: 'user/:id',
+        component: UserComponent
       }
     ]
   },

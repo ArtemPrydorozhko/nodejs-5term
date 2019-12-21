@@ -13,7 +13,7 @@ async function createUser(user) {
         lastname: user.lastname,
         email: user.email,
         password: user.password,
-        userRole: roles.admin
+        userRole: roles.user
     });
     let userSafe = Object.assign({}, usr.dataValues);
 
@@ -29,7 +29,9 @@ async function getUserById(id) {
 }
 
 async function getUsers() {
-    let user = await User.findAll();
+    let user = await User.findAll({
+        raw: true
+    });
     return user;
 }
 
@@ -50,7 +52,7 @@ async function updateUser(user, id) {
             }
         });
 
-    const usr = Post.findByPk(id);
+    const usr = await User.findByPk(id);
 
     let userSafe = Object.assign({}, usr.dataValues);
     delete userSafe.password;

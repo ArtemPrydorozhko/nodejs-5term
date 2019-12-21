@@ -70,7 +70,7 @@ async function updateLike(like, id) {
             }
         });
     
-    const result = Like.findByPk(id);
+    const result = await Like.findByPk(id);
 
     return result.dataValues;
 }

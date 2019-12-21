@@ -40,14 +40,18 @@ export class LoginComponent implements OnInit {
         password: this.form.value.password
       }).subscribe((token: string) => {
         this.tokenService.setToken(token);
-        this.router.navigate([this.tokenService.urlToNavigate]);
+        if (this.tokenService.urlToNavigate) {
+          this.router.navigate([this.tokenService.urlToNavigate]);
+        } else {
+          this.router.navigate(['/home']);
+        }
       }, (error) => {
         this.error = error.message
       });
     } else {
       this.httpService.signup(this.form.value).subscribe((token: string) => {
         this.tokenService.setToken(token);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/home']);
       }, (error) => {
         this.error = error.message
       });

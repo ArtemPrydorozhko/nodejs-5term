@@ -1,10 +1,12 @@
 const Comment = require('../models/comment');
 
-async function createComment(comment, userId, postId) {
+async function createComment(comment, userId) {
     const result = await Comment.create({
         text: comment.text,
         userId,
-        postId
+        postId: comment.postId,
+        firstname: comment.firstname,
+        lastname: comment.lastname
     });
 
     return result.dataValues;

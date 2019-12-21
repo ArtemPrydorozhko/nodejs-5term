@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-6 friend__list">
+        Friends
+        <div class="friend__item" *ngFor="let friend of friends"
+        (click)="onFriendSelected(friend.id)">
+            <img class="friend__image" [src]="friend.avatarUrl ? friend.avatarUrl : 'https://crowdsourcer.io/assets/images/no-img.png'" alt="">
+            <p>{{ friend.firstname }} {{ friend.lastname }}</p>
+        </div>
+    </div>
+    <div class="col-6 friend__list">
+        Users
+        <div class="friend__item" *ngFor="let user of users"
+        (click)="onUserSelected(user.id)">
+            <img class="friend__image" [src]="user.avatarUrl ? user.avatarUrl : 'https://crowdsourcer.io/assets/images/no-img.png'" alt="">
+            <p>{{ user.firstname }} {{ user.lastname }}</p>
+        </div>
+    </div>
+</div>

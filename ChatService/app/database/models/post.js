@@ -16,7 +16,7 @@ const Post = sequelize.define("post", {
         allowNull: true
     },
     mediaUrl: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true
     }
 });

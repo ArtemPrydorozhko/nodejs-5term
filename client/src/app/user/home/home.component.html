@@ -2,17 +2,25 @@
     <div class="col-10">
         <div class="row">
             <div class="col-5">
-                <img src="https://crowdsourcer.io/assets/images/no-img.png" alt="" class="img-fluid home__image">
+                <img [src]="user.avatarUrl ? user.avatarUrl : 'https://crowdsourcer.io/assets/images/no-img.png'" alt="" class="img-fluid home__image">
             </div>
             <div class="col-7">
                 <div class="home__info">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">name</h5>
+                            <h5 class="card-title">{{ user.firstname }} {{ user.lastname }}</h5>
                             <p class="card-text">Text about me.</p>
-                            <p class="card-text">Some quick example.</p>
                         </div>
                     </div>
+                </div>
+                <div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Image url</span>
+                        </div>
+                        <input type="text" class="form-control" #avatarUrl>
+                    </div>
+                    <button class="btn btn-outline-danger" (click)="onChangeAvatar(avatarUrl)">Change avatar</button>
                 </div>
             </div>
         </div>
@@ -20,7 +28,7 @@
             <div class="col-10">
                 <form [formGroup]="newPost" (ngSubmit)="onCreatePost()">
                     <legend>New Post</legend>
-                    <div class="input-group">
+                    <!-- <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputFile">Upload image</span>
                         </div>
@@ -29,18 +37,25 @@
                                 accept="image/*"  (change)="uploadFile($event)">
                             <label class="custom-file-label" for="inputFile" #imageLabel>Choose image</label>
                         </div>
+                    </div> -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Image url</span>
+                        </div>
+                        <input type="text" class="form-control" formControlName="mediaUrl">
                     </div>
                     <div class="form-group">
                         <textarea class="form-control" id="posttext" rows="3" formControlName="text"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-success float-right" [disabled]="newPost.invalid">Create</button>
+                    <button type="submit" class="btn btn-success float-right"
+                        [disabled]="newPost.invalid">Create</button>
                 </form>
             </div>
         </div>
         <hr>
         <div class="row justify-content-center">
             <div class="col-10">
-                <app-post *ngFor="let post of posts" [post]="post" (deletePost)="onDeletePost($event)"></app-post>
+                <app-post *ngFor="let post of posts" [post]="post" [userId]="user.id" [canDelete]="true" (deletePost)="onDeletePost($event)"></app-post>
             </div>
         </div>
     </div>

@@ -1,13 +1,14 @@
 version: '3'
 services: 
     db:
+        container_name: db
         image: mysql
         ports:
             - ${DBPORT}:${DBPORT}
         environment: 
             - MYSQL_DATABASE=${DBDATABASE}
             - MYSQL_ROOT_PASSWORD=${DBPASSWORD}
-            # > docker exec -it e08a5c9777c1 mysql -uroot -p
+            # > docker exec -it db mysql -uroot -p
     redis:
         image: redis
         ports:
@@ -27,15 +28,13 @@ services:
             - authservice
             - userservice
             - chatservice
-    client:
-        build:
-            context: ./client
-            dockerfile: Dockerfile.dev
-        volumes:
-            - /usr/app/node_modules
-            - ./client:/usr/app
-        ports: 
-            - '49153:49153'
+    # client:
+    #     build:
+    #         context: ./client
+    #         dockerfile: Dockerfile.dev
+    #     volumes:
+    #         - /usr/app/node_modules
+    #         - ./client:/usr/app
     authservice:
         build: 
             context: ./AuthService

@@ -6,7 +6,8 @@ const User = require('../../database/dao/user');
 router.get('/user/', async (req, res) => {
     try {
         const users = await User.getUsers();
-
+        console.log(users);
+        
         res.status(200).json(users);
     } catch (error) {
         console.log(error);
