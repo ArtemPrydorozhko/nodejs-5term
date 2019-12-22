@@ -1,5 +1,8 @@
 const Chat = require('../models/chat');
 const Message = require('../models/message');
+const User = require('../models/user');
+
+const Op = require('sequelize').Op;   
 
 async function createChat(user1Id, user2Id) {
     const result = await Chat.create({
@@ -8,6 +11,22 @@ async function createChat(user1Id, user2Id) {
     });
 
     return result.dataValues;
+}
+
+async function doesChatExist(user1Id, user2Id) {
+    const result = await Chat.findOne({
+        where: {
+            user1Id : {
+                [Op.or]: [user1Id, user2Id],
+            },
+            user2Id:{
+                [Op.or]: [user1Id, user2Id]
+            }
+        },
+        raw: true
+    });
+
+    return result;
 }
 
 async function getChatById(id) {
@@ -23,10 +42,24 @@ async function getChatsByUserId(id) {
         where: {
             [Op.or]: [{ user1Id: id }, { user2Id: id }]
         },
-        include: [Message]
+        raw: true
     });
 
-    return result.dataValues;
+    for (let index = 0; index < result.length; index++) {
+        const chat = result[index];
+        let user;
+        if (chat.user1Id === id) {
+            user = await User.findByPk(chat.user2Id, { raw: true });
+            result[index].firstname = user.firstname;
+            result[index].lastname = user.lastname;
+        } else {
+            user = await User.findByPk(chat.user1Id, { raw: true });
+            result[index].firstname = user.firstname;
+            result[index].lastname = user.lastname;
+        }
+    }
+
+    return result;
 }
 
 async function getChats() {
@@ -48,6 +81,7 @@ async function deleteChat(id) {
 
 module.exports = {
     createChat,
+    doesChatExist,
     getChatById,
     getChatsByUserId,
     getChats,

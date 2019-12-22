@@ -1,9 +1,10 @@
 const Message = require('../models/message');
 
-async function createMessage(userId, chatId, text, mediaUrl) {
+async function createMessage(userId, chatId, text, mediaUrl, time) {
     const result = await Message.create({
         userId,
         text,
+        time,
         mediaUrl,
         chatId,
         edited: false
@@ -19,13 +20,14 @@ async function getMessageById(id) {
 }
 
 async function getMessagesByChatId(chatId) {
-    const result = await Message.findOne({
+    const result = await Message.findAll({
         where: {
             chatId
-        }
+        },
+        raw: true
     });
 
-    return result.dataValues;
+    return result;
 }
 
 async function getMessages() {

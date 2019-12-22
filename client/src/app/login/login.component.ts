@@ -5,6 +5,7 @@ import { TokenService } from '../shared/services/token/token.service';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators'
 import { throwError } from 'rxjs';
+import { WebSocketService } from '../shared/services/web-socket/web-socket.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private httpService: ServerService,
     private tokenService: TokenService,
-    private router: Router) { }
+    private router: Router,
+    private webSocketService: WebSocketService) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -40,6 +42,9 @@ export class LoginComponent implements OnInit {
         password: this.form.value.password
       }).subscribe((token: string) => {
         this.tokenService.setToken(token);
+        this.webSocketService.emit('connect', {
+          id: this.tokenService.getUserId()
+        });
         if (this.tokenService.urlToNavigate) {
           this.router.navigate([this.tokenService.urlToNavigate]);
         } else {
@@ -51,6 +56,9 @@ export class LoginComponent implements OnInit {
     } else {
       this.httpService.signup(this.form.value).subscribe((token: string) => {
         this.tokenService.setToken(token);
+        this.webSocketService.emit('connect', {
+          id: this.tokenService.getUserId()
+        });
         this.router.navigate(['/home']);
       }, (error) => {
         

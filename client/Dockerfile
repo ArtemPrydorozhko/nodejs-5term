@@ -8,4 +8,4 @@ RUN npm run build
 FROM nginx
 EXPOSE 80
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/dist/frontend /usr/share/nginx/html
+COPY --from=builder /app/dist/facebook-mini /usr/share/nginx/html

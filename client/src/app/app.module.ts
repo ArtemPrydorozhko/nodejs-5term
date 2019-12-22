@@ -16,6 +16,9 @@ import { AuthInterceptor } from './auth-interceptor.service';
 import { FriendsComponent } from './friends/friends.component';
 import { GroupsComponent } from './groups/groups.component';
 import { GroupComponent } from './groups/group/group.component';
+import { ChatsComponent } from './chats/chats.component';
+import { ChatComponent } from './chats/chat/chat.component';
+import { GroupChatComponent } from './chats/group-chat/group-chat.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,9 @@ import { GroupComponent } from './groups/group/group.component';
     FriendsComponent,
     GroupsComponent,
     GroupComponent,
+    ChatsComponent,
+    ChatComponent,
+    GroupChatComponent,
   ],
   imports: [
     BrowserModule,

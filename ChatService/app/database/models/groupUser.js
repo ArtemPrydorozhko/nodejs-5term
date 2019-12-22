@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const User = require('./user');
 const Group = require('./group');
 
-const GroupUser = sequelize.define("groupchat", {
+const GroupUser = sequelize.define("groupuser", {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,

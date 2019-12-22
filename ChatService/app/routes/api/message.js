@@ -27,6 +27,18 @@ router.get('/message', async (req, res) => {
     }
 });
 
+router.get('/message/chat/:id', async (req, res) => {
+    try {
+        const messages = await Message.getMessagesByChatId(req.params.id);
+        console.log(messages);
+        
+        res.status(200).json(messages);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
 router.get('/message/:id', async (req, res) => {
     try {
         const id = req.params.id;
@@ -69,16 +81,15 @@ router.put('/message/:id', async (req, res) => {
 
 router.post('/message', async (req, res) => {
     try {
-        const messagePr = Message.createMessage(req.user.id, req.body.chatId, req.body.text, req.body.mediaUrl);
-        const userPr = User.getUserById(req.user.id);
-        const [message, user] = await Promise.all(messagePr, userPr);
-
-        io.to(req.body.chatId.toString()).emit('message', {
-            text: message.text,
-            time: message.time,
+        console.log(req.body);
+        const message = await Message.createMessage(req.user.id, req.body.chatId, req.body.text, req.body.mediaUrl, req.body.time);
+        const user = await User.getUserById(req.user.id);
+        console.log(message);
+        
+        io.of('/api/chatservice').to(req.body.chatId.toString()).emit('chatMessage', {
+            ...message,
             firstname: user.firstname,
             lastname: user.lastname,
-            chatId: req.body.chatId
         });
         res.status(200).json(message);
     } catch (error) {

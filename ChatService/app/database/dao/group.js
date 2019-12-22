@@ -1,14 +1,14 @@
 const GroupUser = require('../models/groupUser');
-const User = require('../dao/user');
+const User = require('../models/user');
 const Group = require('../models/group');
 
 async function createGroup(userId, name) {
     const result = await Group.create({
         name
     });
-    const user = await User.getUserById(userId);
+    const user = await User.findByPk(userId);
     const rawUser = user.dataValues;
-    result.addUser(rawUser, { through: { admin: true } });
+    await result.addUser(rawUser.id, { through: { admin: true } });
 
     return result.dataValues;
 }
@@ -16,20 +16,19 @@ async function createGroup(userId, name) {
 async function getGroupById(id) {
     const group = await Group.findByPk(id);
 
-    const result = group.getUsers();
-    console.log(result);
+    const users = await group.getUsers({raw: true});
+    const result = group.dataValues;
+    result.users = users;
 
-    return result.dataValues;
+    return result;
 }
 
 async function getGroupsByUserId(id) {
     const user = await User.findByPk(id);
 
-    const result = user.getGroups();
-    console.log(result);
+    const result = await user.getGroups({raw: true});
     
-    return result.dataValues;
-
+    return result;
 }
 
 async function getGroups() {
@@ -64,10 +63,21 @@ async function updateGroup(id, group) {
 
 async function addUserToGroup(groupId, userId) {
     const grop = await Group.findByPk(groupId);
-    const user = await User.getUserById(userId);
-    grop.addUser(user, { through: { admin: false } });
+    const user = await User.findByPk(userId);
+    await grop.addUser(user.dataValues.id, { through: { admin: false } });
 
     return true;
+}
+
+async function removeUserFromGroup(groupId, userId) {
+    const result = await GroupUser.destroy({
+        where: {
+            userId,
+            groupId
+        }
+    })
+
+    return result;
 }
 
 module.exports = {
@@ -77,5 +87,6 @@ module.exports = {
     getGroups,
     deleteGroup,
     updateGroup,
+    removeUserFromGroup,
     addUserToGroup
 }

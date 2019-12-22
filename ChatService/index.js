@@ -6,6 +6,8 @@ const server = require('./socket').server;
 const io = require('./socket').io;
 const cors = require('cors');
 
+io.origins('*:*');
+
 const sequelize = require('./app/database/connection/sequelize');
 
 app.use(cors());
@@ -14,6 +16,7 @@ app.use(express.json());
 const chatRoutes = require('./app/routes/api/chat');
 const groupChatRoutes = require('./app/routes/api/groupChat');
 const socketHandler = require('./app/routes/api/chatSocket');
+const messageRoutes = require('./app/routes/api//message');
 
 app.use(auth);
 app.use(function (err, req, res, next) {
@@ -24,9 +27,9 @@ app.use(function (err, req, res, next) {
 
 app.use('/api/chatservice', chatRoutes);
 app.use('/api/chatservice', groupChatRoutes);
+app.use('/api/chatservice', messageRoutes);
 
-io.on('connection', socketHandler);
-
+io.of('/api/chatservice').on('connection', socketHandler);
 sequelize.sync().then(() => {
     server.listen(config.chatPort, () => {
         console.log('ChatService started');

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { User } from '../../models/user.model';
 import { RouterStateSnapshot } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { RouterStateSnapshot } from '@angular/router';
 export class TokenService {
   private JWTHelper: JwtHelperService;
   public urlToNavigate: string;
-
+  public tokenSubject =  new Subject<void>();
   constructor() {
     this.JWTHelper = new JwtHelperService();
    }
@@ -18,6 +19,7 @@ export class TokenService {
     sessionStorage.setItem('token', token);
     const decoded = this.JWTHelper.decodeToken(token);
     sessionStorage.setItem('decodedToken', JSON.stringify(decoded));
+    this.tokenSubject.next();
   }
 
   public getToken(): string {

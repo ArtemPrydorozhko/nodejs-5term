@@ -1,0 +1,26 @@
+<div class="row justify-content-center">
+    <div class="col-6 chat__container">
+        <div class="chat__message" *ngFor="let message of messages" [ngClass]="{'chat__userMessage': message.userId === userId}">
+            <p class="chat__userinfo">{{ message.time | date:'short'}}</p>
+            <img *ngIf="message.mediaUrl" class="chat__image" [src]="message.mediaUrl" alt="">
+            <p class="chat__text">{{ message.text }}</p>
+        </div>
+    </div>
+    <div class="col-6 chat__form">
+        <form [formGroup]="newMessage" (ngSubmit)="onSendMessage()">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Image url</span>
+                </div>
+                <input type="text" class="form-control" formControlName="mediaUrl">
+            </div>
+            <div class="chat__from-text">
+                <div class="form-group">
+                    <textarea class="form-control" id="posttext" rows="1" formControlName="text"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success float-right"
+                    [disabled]="newMessage.invalid">Send</button>
+            </div>
+        </form>
+    </div>
+</div>

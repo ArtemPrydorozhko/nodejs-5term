@@ -18,6 +18,8 @@ router.get('/chat/all', async (req, res) => {
 router.get('/chat', async (req, res) => {
     try {
         const chats = await Chat.getChatsByUserId(req.user.id);
+        console.log(chats);
+        
 
         res.status(200).json(chats);
     } catch (error) {
@@ -57,7 +59,15 @@ router.delete('/chat/:id', async (req, res) => {
 
 router.post('/chat', async (req, res) => {
     try {
-        const chat = await Chat.createChat(req.user.id, req.body.user2Id);
+        const doesExist = await Chat.doesChatExist(req.user.id, req.body.userId);
+        console.log(doesExist);
+
+        if (doesExist) {
+            res.status(200).json(doesExist);
+            return
+        }
+
+        const chat = await Chat.createChat(req.user.id, req.body.userId);
         redisClient.sadd('chat:' + req.user.id.toString(), chat.id.toString());
         redisClient.sadd('chat:' + req.body.user2Id.toString(), chat.id.toString());
         chatPub.publish('new chat', JSON.stringify(Object.assign({}, {
@@ -65,6 +75,9 @@ router.post('/chat', async (req, res) => {
             user2Id: req.body.user2Id.toString(),
             chatId:  chat.id.toString()
         })));
+
+        console.log(chat);
+
         res.status(200).json(chat);
     } catch (error) {
         console.log(error);

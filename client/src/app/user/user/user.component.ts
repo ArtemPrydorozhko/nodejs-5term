@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { Post } from 'src/app/shared/models/post.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServerService } from 'src/app/shared/services/http/http.service';
 
 @Component({
@@ -16,7 +16,8 @@ export class UserComponent implements OnInit {
   public isFriend: boolean;
   private id: number;
   constructor(private route: ActivatedRoute,
-    private serverService: ServerService) { }
+    private serverService: ServerService,
+    private router: Router) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
@@ -40,6 +41,14 @@ export class UserComponent implements OnInit {
       if (result) {
         this.isFriend = true;
       }
+    });
+  }
+
+  public onOpenChat() {
+    this.serverService.createChat(this.id).subscribe((result: any) => {
+      console.log(result);
+      
+      this.router.navigate([`/chats/${result.id}`]);
     });
   }
 }

@@ -9,6 +9,9 @@ import { FriendsComponent } from './friends/friends.component';
 import { UserComponent } from './user/user/user.component';
 import { GroupsComponent } from './groups/groups.component';
 import { GroupComponent } from './groups/group/group.component';
+import { ChatsComponent } from './chats/chats.component';
+import { ChatComponent } from './chats/chat/chat.component';
+import { GroupChatComponent } from './chats/group-chat/group-chat.component';
 
 
 const routes: Routes = [
@@ -33,6 +36,18 @@ const routes: Routes = [
       {
         path: 'groups/:id',
         component: GroupComponent
+      },
+      {
+        path: 'chats',
+        component: ChatsComponent
+      },
+      {
+        path: 'chats/:id',
+        component: ChatComponent
+      },
+      {
+        path: 'groupChats/:id',
+        component: GroupChatComponent
       },
       {
         path: 'user/:id',

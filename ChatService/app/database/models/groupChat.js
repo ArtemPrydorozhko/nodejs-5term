@@ -1,7 +1,7 @@
 const sequelize = require('../connection/sequelize');
 const Sequelize = require('sequelize');
 
-const GroupMessage = require('./message');
+const GroupMessage = require('./groupMessage');
 
 const GroupChat = sequelize.define("groupchat", {
     id: {

@@ -7,12 +7,50 @@ services:
         environment: 
             - MYSQL_DATABASE=${DBDATABASE}
             - MYSQL_ROOT_PASSWORD=${DBPASSWORD}
+    redis:
+        image: redis
+        ports:
+            - ${REDIS_PORT}:${REDIS_PORT}
+    nginx:
+        restart: always
+        build:
+            context: ./nginx
+        ports: 
+            - '3000:80'
+        environment: 
+            - AUTHPORT=${AUTHPORT}
+            - USERPORT=${USERPORT}
+            - CHATPORT=${CHATPORT}
+        depends_on: 
+            - authservice
+            - userservice
+            - chatservice
     authservice:
-        build: 
-            context: ./AuthService
+        build: ./AuthService
         restart: always
         env_file: ./.env
         ports: 
             - ${AUTHPORT}:${AUTHPORT}
         depends_on: 
             - db
+            - redis
+    userservice:
+        build: ./UserService
+        restart: always
+        env_file: ./.env
+        ports: 
+            - ${USERPORT}:${USERPORT}
+        depends_on: 
+            - db
+            - redis
+    chatservice:
+        build: ./ChatService
+        restart: always
+        env_file: ./.env
+        ports: 
+            - ${CHATPORT}:${CHATPORT}
+        depends_on: 
+            - db
+            - redis
+    client:
+        build: ./client

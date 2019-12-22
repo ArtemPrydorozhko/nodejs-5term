@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Like } from '../../models/post.model';
+import { Message } from '../../models/chat.model';
 
 @Injectable({
   providedIn: 'root'
@@ -139,5 +140,23 @@ export class ServerService {
 
   public removeUserFromGroup(groupId: number, userId: number) {
     return this.http.post(this.url + `/api/userservice/group/${groupId}/removeUser`, { userId });
+  }
+
+  public getChats() {
+    return this.http.get(this.url + `/api/chatservice/chat`);
+  }
+
+  public createChat(userId: number) {
+    return this.http.post(this.url + `/api/chatservice/chat`, {
+      userId
+    });
+  }
+
+  public sendMessage(message: {userId: number, chatId: number, text: string, mediaUrl: string, time: any}) {
+    return this.http.post(this.url + `/api/chatservice/message`, message);
+  }
+
+  public getChatMessages(chatId: number) {
+    return this.http.get(this.url + `/api/chatservice/message/chat/${chatId}`);
   }
 }

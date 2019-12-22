@@ -8,6 +8,7 @@ try {
         port: config.redisPort,
         retry_strategy: () => 1000
     });
+    let a = redisClient.duplicate()
 } catch (error) {
     process.exit(1);
 }
