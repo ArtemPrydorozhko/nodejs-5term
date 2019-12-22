@@ -25,7 +25,7 @@ export class ServerService {
     });
   }
 
-  public likePost(like: {type: Like, postId: number}) {
+  public likePost(like: { type: Like, postId: number }) {
     return this.http.post(this.url + '/api/userservice/like', {
       type: like.type,
       postId: like.postId
@@ -36,7 +36,7 @@ export class ServerService {
     return this.http.delete(this.url + `/api/userservice/like/${likeId}`);
   }
 
-  public updateLike(like: {likeId: number, type: Like}) {
+  public updateLike(like: { likeId: number, type: Like }) {
     return this.http.put(this.url + `/api/userservice/like/${like.likeId}`, {
       type: like.type
     });
@@ -46,8 +46,15 @@ export class ServerService {
     return this.http.delete(this.url + `/api/userservice/post/${postId}`);
   }
 
-  public createPost(post: {text: string, mediaUrl: string}) {
+  public createPost(post: { text: string, mediaUrl: string }) {
     return this.http.post(this.url + '/api/userservice/post', {
+      text: post.text,
+      mediaUrl: post.mediaUrl
+    });
+  }
+
+  public createGroupPost(post: { text: string, mediaUrl: string, groupId: number }) {
+    return this.http.post(this.url + `/api/userservice/post/group/${post.groupId}`, {
       text: post.text,
       mediaUrl: post.mediaUrl
     });
@@ -57,7 +64,11 @@ export class ServerService {
     return this.http.get(this.url + `/api/userservice/post/user/${userId}`);
   }
 
-  public createComment(comment: {text: string, postId: number}) {
+  public getGroupPosts(groupId: number) {
+    return this.http.get(this.url + `/api/userservice/post/group/${groupId}`);
+  }
+
+  public createComment(comment: { text: string, postId: number }) {
     return this.http.post(this.url + '/api/userservice/comment', {
       text: comment.text,
       postId: comment.postId
@@ -72,6 +83,10 @@ export class ServerService {
     return this.http.get(this.url + `/api/userservice/friend`);
   }
 
+  public areFriends(friendId: number) {
+    return this.http.get(this.url + `/api/userservice/friend/exist/${friendId}`);
+  }
+
   public getUsers() {
     return this.http.get(this.url + `/api/userservice/user`);
   }
@@ -82,9 +97,9 @@ export class ServerService {
 
   public updateUserAvatar(avatarUrl: string, id: number) {
     return this.http.put(this.url + `/api/userservice/user/${id}`,
-    {
-      avatarUrl
-    });
+      {
+        avatarUrl
+      });
   }
 
   public getFriend(friendId: number) {
@@ -93,8 +108,36 @@ export class ServerService {
 
   public addFriend(friendId: number) {
     return this.http.post(this.url + `/api/userservice/friend`,
-    {
-      friendId
-    });
+      {
+        friendId
+      });
+  }
+
+  public createGroup(group: { name: string, mediaUrl: string }) {
+    return this.http.post(this.url + `/api/userservice/group`,
+      {
+        name: group.name,
+        mediaUrl: group.mediaUrl
+      });
+  }
+
+  public getGroups() {
+    return this.http.get(this.url + `/api/userservice/group/all`);
+  }
+
+  public getGroup(groupId: number) {
+    return this.http.get(this.url + `/api/userservice/group/${groupId}`);
+  }
+
+  public getUserGroups() {
+    return this.http.get(this.url + `/api/userservice/group`);
+  }
+
+  public addUserToGroup(groupId: number) {
+    return this.http.post(this.url + `/api/userservice/group/${groupId}/addUser`, {});
+  }
+
+  public removeUserFromGroup(groupId: number, userId: number) {
+    return this.http.post(this.url + `/api/userservice/group/${groupId}/removeUser`, { userId });
   }
 }

@@ -14,6 +14,8 @@ const postRoutes = require('./app/routes/api/post');
 const likeRoutes = require('./app/routes/api/like');
 const commentRoutes = require('./app/routes/api/comment');
 const friendRoutes = require('./app/routes/api/friend');
+const groupRoutes = require('./app/routes/api/group');
+
 app.use(auth);
 app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
@@ -26,6 +28,7 @@ app.use('/api/userservice', postRoutes);
 app.use('/api/userservice', likeRoutes);
 app.use('/api/userservice', commentRoutes);
 app.use('/api/userservice', friendRoutes);
+app.use('/api/userservice', groupRoutes);
 
 sequelize.sync().then(() => {
     app.listen(config.userPort, () => {

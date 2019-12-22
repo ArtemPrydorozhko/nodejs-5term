@@ -7,6 +7,8 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { HomeComponent } from './user/home/home.component';
 import { FriendsComponent } from './friends/friends.component';
 import { UserComponent } from './user/user/user.component';
+import { GroupsComponent } from './groups/groups.component';
+import { GroupComponent } from './groups/group/group.component';
 
 
 const routes: Routes = [
@@ -23,6 +25,14 @@ const routes: Routes = [
       {
         path: 'friends',
         component: FriendsComponent
+      },
+      {
+        path: 'groups',
+        component: GroupsComponent
+      },
+      {
+        path: 'groups/:id',
+        component: GroupComponent
       },
       {
         path: 'user/:id',

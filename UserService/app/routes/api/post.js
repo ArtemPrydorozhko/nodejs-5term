@@ -28,6 +28,20 @@ router.get('/post/user/:userId', async (req, res) => {
     }
 });
 
+router.get('/post/group/:groupId', async (req, res) => {
+    try {
+        console.log(req.params.groupId, req.user.id);
+        
+        const posts = await Post.getPostsByGroupId(req.params.groupId, req.user.id);
+        console.log(posts);
+        
+        res.status(200).json(posts);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
 router.get('/post/:id', async (req, res) => {
     try {
         const id = req.params.id;
@@ -69,6 +83,17 @@ router.post('/post', async (req, res) => {
         console.log(req.user);
         
         const post = await Post.createPost(req.body, req.user.id);
+
+        res.status(200).json(post);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+router.post('/post/group/:groupId', async (req, res) => {
+    try {
+        const post = await Post.createGroupPost(req.body, req.params.groupId);
 
         res.status(200).json(post);
     } catch (error) {

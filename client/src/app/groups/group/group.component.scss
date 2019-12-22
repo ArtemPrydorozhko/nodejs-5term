@@ -1,0 +1,26 @@
+.group__toggle-button {
+    margin-left: 200px;
+}
+
+.group {
+    &__user {
+        height: 100px;
+        display: flex;
+        align-items: center;
+        padding: 3px;
+        border: 1px solid #cccccc;
+        cursor: pointer;
+    }
+
+    &__image {
+        max-height: 100px;
+        max-width: 100px;
+        margin-right: 10px;
+    }
+
+    &__admin {
+        margin-left: auto;
+        margin-right: 10px;
+        color: #666666;
+    }
+}

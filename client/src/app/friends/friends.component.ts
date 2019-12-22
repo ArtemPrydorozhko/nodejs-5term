@@ -19,6 +19,8 @@ export class FriendsComponent implements OnInit {
 
   ngOnInit() {
     this.serverService.getFriends().subscribe((friends: User[]) => {
+      console.log(friends);
+      
       const id = this.tokenService.getUserId();
       this.friends = friends.filter((friend) => friend.id !== id);
     });

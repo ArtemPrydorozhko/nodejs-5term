@@ -86,6 +86,7 @@ export class HomeComponent implements OnInit {
       newPost.dislikes = 0;
       newPost.userLike = null;
       newPost.userLikeId = null;
+      newPost.comments = [];
       this.posts.unshift(newPost);
     });
   }

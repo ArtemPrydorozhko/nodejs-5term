@@ -44,7 +44,7 @@ const User = sequelize.define("user", {
     }
 });
 
-User.hasMany(Post, { onDelete: "cascade" });
+User.hasMany(Post, { onDelete: "cascade", foreignKey: { allowNull: true } });
 User.hasMany(Comment, { onDelete: "cascade" });
 User.hasMany(Like, { onDelete: "cascade" });
 User.hasMany(Chat, { onDelete: "cascade" });

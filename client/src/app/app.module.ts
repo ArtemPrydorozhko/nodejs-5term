@@ -14,6 +14,8 @@ import { HomeComponent } from './user/home/home.component';
 import { PostComponent } from './user/post/post.component';
 import { AuthInterceptor } from './auth-interceptor.service';
 import { FriendsComponent } from './friends/friends.component';
+import { GroupsComponent } from './groups/groups.component';
+import { GroupComponent } from './groups/group/group.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { FriendsComponent } from './friends/friends.component';
     HomeComponent,
     PostComponent,
     FriendsComponent,
+    GroupsComponent,
+    GroupComponent,
   ],
   imports: [
     BrowserModule,

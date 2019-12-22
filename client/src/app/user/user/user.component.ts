@@ -21,10 +21,9 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
 
-    this.serverService.getFriend(this.id).subscribe(friend => {
+    this.serverService.areFriends(this.id).subscribe(friend => {
       this.isFriend = friend !== null;
       console.log(this.isFriend);
-      
     });
 
     this.serverService.getUser(this.id).subscribe((user: User) => {

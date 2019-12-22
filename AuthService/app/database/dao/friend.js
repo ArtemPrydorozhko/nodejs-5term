@@ -10,6 +10,18 @@ async function createFriend(friendId, userId) {
     return result.dataValues;
 }
 
+async function areUsersFriends(friendId, userId) {
+    const result = await Friend.findOne({
+        where: {
+            userId,
+            friendId
+        },
+        raw: true
+    });
+
+    return result;
+}
+
 async function getFriendsByUserId(userId) {
     const result = await Friend.findAll({
         where: {
@@ -52,5 +64,6 @@ module.exports = {
     createFriend,
     getFriendsByUserId,
     getFriends,
-    deleteFriend
+    deleteFriend,
+    areUsersFriends
 }

@@ -25,6 +25,18 @@ router.get('/friend', async (req, res) => {
         console.log(error);
         res.status(400).json({ error: error.message });
     }
+
+});
+router.get('/friend/exist/:id', async (req, res) => {
+    try {
+        const friends = await Friend.areUsersFriends(req.params.id, req.user.id);
+        console.log(friends);
+
+        res.status(200).json(friends);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: error.message });
+    }
 });
 
 router.get('/friend/:id', async (req, res) => {
