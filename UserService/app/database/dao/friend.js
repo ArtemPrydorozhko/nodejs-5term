@@ -55,7 +55,6 @@ async function getFriendsByUserId(userId) {
         friends.push(friend2);
         
     }
-
 console.log(result);
 
     return friends;

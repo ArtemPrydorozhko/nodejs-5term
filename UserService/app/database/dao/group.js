@@ -75,7 +75,7 @@ async function removeUserFromGroup(groupId, userId) {
             userId,
             groupId
         }
-    });
+    })
 
     return result;
 }

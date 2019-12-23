@@ -4,8 +4,8 @@ const Sequelize = require('sequelize');
 const Post = require('./post');
 const Comment = require('./comment');
 const Like = require('./like');
-const Chat = require('./chat');
 const Friend = require('./friend');
+const Message = require('./message');
 
 const User = sequelize.define("user", {
     id: {
@@ -47,7 +47,7 @@ const User = sequelize.define("user", {
 User.hasMany(Post, { onDelete: "cascade", foreignKey: { allowNull: true } });
 User.hasMany(Comment, { onDelete: "cascade" });
 User.hasMany(Like, { onDelete: "cascade" });
-User.hasMany(Chat, { onDelete: "cascade" });
 User.hasMany(Friend, { onDelete: "cascade" });
+User.hasMany(Message, { onDelete: "cascade" });
 
 module.exports = User;

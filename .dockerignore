@@ -6,3 +6,4 @@ Dockerfile.*
 # **/database
 # !shared/config
 # !shared/database
+**/.stryker-tmp

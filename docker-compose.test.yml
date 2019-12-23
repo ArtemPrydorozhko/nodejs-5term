@@ -1,0 +1,35 @@
+version: '3'
+services: 
+    authservice:
+        build: 
+            context: ./AuthService
+            dockerfile: Dockerfile.dev
+        env_file: ./.env
+        ports: 
+            - ${AUTHPORT}:${AUTHPORT}
+        volumes:
+            - /usr/app/node_modules
+            - ./AuthService:/usr/app
+        command: ["npm", "run", "test"]
+    userservice:
+        build: 
+            context: ./UserService
+            dockerfile: Dockerfile.dev
+        env_file: ./.env
+        ports: 
+            - ${USERPORT}:${USERPORT}
+        volumes:
+            - /usr/app/node_modules
+            - ./UserService:/usr/app
+        command: ["npm", "run", "test"]
+    chatservice:
+        build: 
+            context: ./ChatService
+            dockerfile: Dockerfile.dev
+        env_file: ./.env
+        ports: 
+            - ${CHATPORT}:${CHATPORT}
+        volumes:
+            - /usr/app/node_modules
+            - ./ChatService:/usr/app
+        command: ["npm", "run", "test"]

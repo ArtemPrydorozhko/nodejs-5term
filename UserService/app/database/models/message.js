@@ -8,10 +8,6 @@ const Message = sequelize.define("message", {
         primaryKey: true,
         allowNull: false
     },
-    userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
     text: {
         type: Sequelize.STRING,
         allowNull: true
@@ -21,7 +17,7 @@ const Message = sequelize.define("message", {
         allowNull: true
     },
     edited: {
-        type: Sequelize.STRING,
+        type: Sequelize.BOOLEAN,
         allowNull: true
     },
     time: {

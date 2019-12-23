@@ -1,12 +1,15 @@
 {
   "name": "AuthService",
+  "jest": {
+    "testPathIgnorePatterns": ["/node_modules/", "/.stryker-tmp/"]
+  },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon -L",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "test:watch": "jest --watchAll"
   },
   "keywords": [],

@@ -13,6 +13,16 @@ async function createPost(post, userId) {
     return result.dataValues;
 }
 
+async function createGroupPost(post, groupId) {
+    const result = await Post.create({
+        text: post.text,
+        mediaUrl: post.mediaUrl,
+        groupId
+    });
+
+    return result.dataValues;
+}
+
 async function getPostById(id) {
     const result = await Post.findByPk(id, {
         include: [{
@@ -168,6 +178,7 @@ async function updatePost(post, id) {
 
 module.exports = {
     createPost,
+    createGroupPost,
     getPostById,
     getPostsByUserId,
     getPostsByGroupId,
