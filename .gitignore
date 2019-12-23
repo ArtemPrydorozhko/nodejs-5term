@@ -50,3 +50,4 @@ Thumbs.db
 # **/config
 # !shared/config
 # !shared/database
+.stryker-tmp

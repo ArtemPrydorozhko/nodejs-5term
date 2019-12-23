@@ -16,7 +16,7 @@
                 </div>
                 <div class="form-group" *ngIf="!isLogin">
                     <label for="lastname">Lastname</label>
-                    <input type="password" class="form-control" id="lastname" formControlName="lastname">
+                    <input type="text" class="form-control" id="lastname" formControlName="lastname">
                 </div>
                 <button type="submit" class="btn btn-primary" [disabled]="isValid()">{{ isLogin ? 'Login' : 'Signup'}}</button>
                 <button type="button" class="btn btn-primary" (click)="onChangeType()">{{ isLogin ? 'To Signup' : 'To Login'}}</button>

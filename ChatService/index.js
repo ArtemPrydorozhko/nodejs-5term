@@ -35,3 +35,5 @@ sequelize.sync().then(() => {
         console.log('ChatService started');
     });
 }).catch(err => console.log(err));
+
+module.exports = app;

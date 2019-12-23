@@ -16,3 +16,5 @@ sequelize.sync().then(() => {
         console.log('AuthService started');
     });
 }).catch(err => console.log(err));
+
+module.exports = app;
