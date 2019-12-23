@@ -8,8 +8,10 @@ let sequelize = new Sequelize(config.dbDatabase, config.dbUser, config.dbPasswor
 sequelize.authenticate().then(() => {
     console.log('Connection has been established successfully.');
 }).catch(err => {
+    if (process.env.NODE_ENV != 'test') {
     console.error('Unable to connect to the database:', err);
-    process.exit(0);
+        process.exit(1);
+    }
 });
 
 module.exports = sequelize;

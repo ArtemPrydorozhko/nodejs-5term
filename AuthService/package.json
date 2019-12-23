@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon -L",
-    "test": "jest --detectOpenHandles",
+    "test": "jest",
     "test:watch": "jest --watchAll"
   },
   "keywords": [],

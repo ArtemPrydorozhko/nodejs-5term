@@ -29,11 +29,12 @@ app.use('/api/chatservice', chatRoutes);
 app.use('/api/chatservice', groupChatRoutes);
 app.use('/api/chatservice', messageRoutes);
 
-io.of('/api/chatservice').on('connection', socketHandler);
-sequelize.sync().then(() => {
-    server.listen(config.chatPort, () => {
-        console.log('ChatService started');
-    });
-}).catch(err => console.log(err));
-
+if (process.env.NODE_ENV != 'test') {
+    io.of('/api/chatservice').on('connection', socketHandler);
+    sequelize.sync().then(() => {
+        server.listen(config.chatPort, () => {
+            console.log('ChatService started');
+        });
+    }).catch(err => console.log(err));
+}
 module.exports = app;

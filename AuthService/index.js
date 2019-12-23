@@ -11,10 +11,12 @@ app.use(express.json());
 const loginRoutes = require('./app/routes/api/login');
 app.use('/api/authservice', loginRoutes);
 
-sequelize.sync().then(() => {
-    app.listen(config.authPort, () => {
-        console.log('AuthService started');
-    });
-}).catch(err => console.log(err));
+if (process.env.NODE_ENV != 'test') {
+    sequelize.sync().then(() => {
+        app.listen(config.authPort, () => {
+            console.log('AuthService started');
+        });
+    }).catch(err => console.log(err));
+}
 
 module.exports = app;

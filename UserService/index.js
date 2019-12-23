@@ -30,10 +30,11 @@ app.use('/api/userservice', commentRoutes);
 app.use('/api/userservice', friendRoutes);
 app.use('/api/userservice', groupRoutes);
 
-sequelize.sync().then(() => {
-    app.listen(config.userPort, () => {
-        console.log('UserService started');
-    });
-}).catch(err => console.log(err));
-
+if (process.env.NODE_ENV != 'test') {
+    sequelize.sync().then(() => {
+        app.listen(config.userPort, () => {
+            console.log('UserService started');
+        });
+    }).catch(err => console.log(err));
+}
 module.exports = app;
