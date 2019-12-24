@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-6 chat__list">
+        Chats
+        <div class="chat__item" *ngFor="let chat of chats"
+        (click)="onChatSelected(chat.id)">
+            <img class="chat__image" [src]="chat.avatarUrl ? chat.avatarUrl : 'https://crowdsourcer.io/assets/images/no-img.png'" alt="">
+            <p>{{ chat.firstname }} {{ chat.lastname }}</p>
+        </div>
+    </div>
+    <div class="col-6 chat__list">
+        Group chats
+        <div class="chat__item" *ngFor="let user of users"
+        (click)="onUserSelected(user.id)">
+            <img class="chat__image" [src]="user.avatarUrl ? user.avatarUrl : 'https://crowdsourcer.io/assets/images/no-img.png'" alt="">
+            <p></p>
+        </div>
+    </div>
+</div>

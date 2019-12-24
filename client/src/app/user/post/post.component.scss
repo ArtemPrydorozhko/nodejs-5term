@@ -1,0 +1,71 @@
+.post {
+    margin-top: 10px;
+
+    border: 1px solid #bbbbbb;
+
+    // max-height: 50vh;
+
+    &__image {
+        max-height: 40vh;
+        max-width: 100%;
+    }
+
+    &__likes {
+        padding: 10px;
+    }
+
+    &__like{
+        margin-left:5px;
+    }
+
+    &__image-wrapper {
+        text-align: center;
+    }
+
+    &__remove-btn {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        border-radius: 50%;
+        font-size: 20px;
+        width: 30px;
+        height: 30px;
+        padding: 0px;
+        line-height: 0;
+        z-index: 10;
+    }
+
+    
+
+}
+
+.comment {
+    &__write-comment{
+        width: 80%;
+        display: inline-block;
+    }
+
+    margin-bottom: 5px;
+   
+
+    &__add-comment {
+        margin:5px 0;
+    }
+
+    &__header {
+        position: relative;
+    }
+
+    &__remove-btn {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        border-radius: 50%;
+        font-size: 15px;
+        width: 20px;
+        height: 20px;
+        padding: 0px;
+        line-height: 0;
+        z-index: 10;
+    }
+}

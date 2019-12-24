@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">Facebook mini</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/home']" routerLinkActive="active">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/friends']" routerLinkActive="active">Friends</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/chats']" routerLinkActive="active">Chats</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/groups']" routerLinkActive="active">Groups</a>
+            </li>
+        </ul>
+        <button class="btn btn-primary" (click)="onLogout()">
+            Logout
+        </button>
+    </div>
+</nav>

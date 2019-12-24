@@ -1,0 +1,42 @@
+<div class="row justify-content-center" *ngIf="isAdmin">
+    <div class="col-8">
+        <form [formGroup]="newPost" (ngSubmit)="onCreatePost()">
+            <legend>New Post</legend>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Image url</span>
+                </div>
+                <input type="text" class="form-control" formControlName="mediaUrl">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" id="posttext" rows="3" formControlName="text"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success float-right"
+                [disabled]="newPost.invalid">Create</button>
+        </form>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div *ngIf="!isMember">
+        <button class="btn btn-outline-success" (click)="onJoinGroup()">Join group</button>
+    </div>
+    <div *ngIf="isMember">
+        <button class="btn btn-outline-success" (click)="onLeaveGroup()">Leave group</button>
+    </div>
+    <div class="float-right">
+        <button class="btn btn-outline-primary group__toggle-button" (click)="onToggleMode()">{{ isPostMode ? 'Users' : 'Posts'}}</button>
+    </div>
+</div>
+<hr>
+<div class="row justify-content-center">
+    <div class="col-10" *ngIf="isPostMode">
+        <app-post *ngFor="let post of posts" [post]="post" [userId]="userId" [canDelete]="isAdmin" (deletePost)="onDeletePost($event)"></app-post>
+    </div>
+    <div class="col-10" *ngIf="!isPostMode">
+        <div *ngFor="let user of group.users" (click)="onUserSelected(user.id)" class="group__user">
+            <img class="group__image" [src]="user.avatarUrl ? user.avatarUrl : 'https://crowdsourcer.io/assets/images/no-img.png'" alt="">
+            <p>{{ user.firstname }} {{ user.lastname }}</p>
+            <span class="group__admin" *ngIf="user['groupuser.admin']">admin</span>
+        </div>
+    </div>
+</div>

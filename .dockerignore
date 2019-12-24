@@ -1,0 +1,9 @@
+**/node_modules
+Dockerfile
+Dockerfile.*
+.git
+# **/config
+# **/database
+# !shared/config
+# !shared/database
+**/.stryker-tmp

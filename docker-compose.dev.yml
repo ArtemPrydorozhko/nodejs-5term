@@ -1,0 +1,79 @@
+version: '3'
+services: 
+    db:
+        container_name: db
+        image: mysql
+        ports:
+            - ${DBPORT}:${DBPORT}
+        environment: 
+            - MYSQL_DATABASE=${DBDATABASE}
+            - MYSQL_ROOT_PASSWORD=${DBPASSWORD}
+            # > docker exec -it db mysql -uroot -p
+    redis:
+        image: redis
+        ports:
+            - ${REDIS_PORT}:${REDIS_PORT}
+    nginx:
+        restart: always
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./nginx
+        ports: 
+            - '3000:80'
+        environment: 
+            - AUTHPORT=${AUTHPORT}
+            - USERPORT=${USERPORT}
+            - CHATPORT=${CHATPORT}
+        depends_on: 
+            - authservice
+            - userservice
+            - chatservice
+    # client:
+    #     build:
+    #         context: ./client
+    #         dockerfile: Dockerfile.dev
+    #     volumes:
+    #         - /usr/app/node_modules
+    #         - ./client:/usr/app
+    authservice:
+        build: 
+            context: ./AuthService
+            dockerfile: Dockerfile.dev
+        restart: always
+        env_file: ./.env
+        ports: 
+            - ${AUTHPORT}:${AUTHPORT}
+        volumes:
+            - /usr/app/node_modules
+            - ./AuthService:/usr/app
+        depends_on: 
+            - db
+            - redis
+    userservice:
+        build: 
+            context: ./UserService
+            dockerfile: Dockerfile.dev
+        restart: always
+        env_file: ./.env
+        ports: 
+            - ${USERPORT}:${USERPORT}
+        volumes:
+            - /usr/app/node_modules
+            - ./UserService:/usr/app
+        depends_on: 
+            - db
+            - redis
+    chatservice:
+        build: 
+            context: ./ChatService
+            dockerfile: Dockerfile.dev
+        restart: always
+        env_file: ./.env
+        ports: 
+            - ${CHATPORT}:${CHATPORT}
+        volumes:
+            - /usr/app/node_modules
+            - ./ChatService:/usr/app
+        depends_on: 
+            - db
+            - redis

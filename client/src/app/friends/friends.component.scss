@@ -1,0 +1,16 @@
+.friend {
+    &__item {
+        height: 100px;
+        display: flex;
+        align-items: center;
+        padding: 3px;
+        border: 1px solid #cccccc;
+        cursor: pointer;
+    }
+
+    &__image {
+        max-height: 100px;
+        max-width: 100px;
+        margin-right: 10px;
+    }
+}

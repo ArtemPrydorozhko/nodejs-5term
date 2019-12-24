@@ -1,0 +1,33 @@
+.chat {
+    &__container {
+        margin: 50px;
+        margin-bottom: 5px;
+        padding: 10px;
+        border: 1px solid #aaaaaa;
+        max-height: 70vh;
+        overflow: auto;
+    }
+    &__message {
+        border: 1px solid #dddddd;
+        padding: 5px;
+        width: 50%;
+        margin-bottom: 10px;;
+    }
+
+    &__userMessage {
+        margin-left: 50%;
+    }
+
+    &__from-text {
+        display: flex;
+
+        &>div {
+            width: 100%;
+        }
+    }
+
+    &__image {
+        max-height: 30vh;
+        max-width: 100%;
+    }
+}
