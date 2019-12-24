@@ -8,7 +8,7 @@ import { Message } from '../../models/chat.model';
 })
 export class ServerService {
   constructor(private http: HttpClient) { }
-  private url = 'http://localhost:3000';
+  private url =''; 'http://localhost:3000';
 
   public login(user: { email: string, password: string }) {
     return this.http.post<string>(this.url + '/api/authservice/login', {

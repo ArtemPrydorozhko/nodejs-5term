@@ -11,7 +11,7 @@ export class WebSocketService {
   private socket: any;
   private url;
   constructor(private tokenService: TokenService) {
-    const base = 'http://localhost:3000';
+    const base = '';'http://localhost:3000';
     if (!this.tokenService.isAuthorized()) {
       this.tokenService.tokenSubject.subscribe(() => {
       this.url = base+'/api/chatservice';//window.location.hostname + '/api/chatservice';

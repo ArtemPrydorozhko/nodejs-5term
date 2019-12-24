@@ -9,6 +9,8 @@ const mockedUser = {
 
 jest.mock('../app/database/dao/user', () => ({
     getUserByCredentials: jest.fn((email, password) => {
+        if (!email || !password)
+            throw new Error();
         if (email === mockedUser.email && password === mockedUser.password) {
             return true;
         } else {
@@ -16,7 +18,11 @@ jest.mock('../app/database/dao/user', () => ({
         }
     }),
     generateUserToken: jest.fn(() => 'token'),
-    isEmailUnused: jest.fn((email) => email !== mockedUser.email),
+    isEmailUnused: jest.fn((email) => {
+        if (!email)
+            throw new Error();
+        return email !== mockedUser.email
+    }),
     createUser: jest.fn(() => true)
 }));
 
@@ -32,7 +38,7 @@ describe('Authservice', () => {
             }
 
             request(app).post('/api/authservice/login').send(mockBody).then((response) => {
-                
+
                 expect(response.statusCode).toBe(200);
                 done();
             });
@@ -45,7 +51,15 @@ describe('Authservice', () => {
             }
 
             request(app).post('/api/authservice/login').send(mockBody).then((response) => {
-                
+
+                expect(response.statusCode).not.toBe(200);
+                done();
+            });
+        });
+
+        test('should not login', (done) => {
+            request(app).post('/api/authservice/login').send({}).then((response) => {
+
                 expect(response.statusCode).not.toBe(200);
                 done();
             });
@@ -60,7 +74,7 @@ describe('Authservice', () => {
             }
 
             request(app).post('/api/authservice/signup').send(mockBody).then((response) => {
-                
+
                 expect(response.statusCode).toBe(201);
                 done();
             });
@@ -73,7 +87,15 @@ describe('Authservice', () => {
             }
 
             request(app).post('/api/authservice/signup').send(mockBody).then((response) => {
-                
+
+                expect(response.statusCode).not.toBe(201);
+                done();
+            });
+        });
+
+        test('should not signup', (done) => {
+            request(app).post('/api/authservice/signup').send({}).then((response) => {
+
                 expect(response.statusCode).not.toBe(201);
                 done();
             });
