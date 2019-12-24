@@ -18,6 +18,10 @@ const Post = sequelize.define("post", {
     mediaUrl: {
         type: Sequelize.TEXT,
         allowNull: true
+    },
+    groupId: {
+        type: Sequelize.INTEGER,
+        allowNull: true
     }
 });
 

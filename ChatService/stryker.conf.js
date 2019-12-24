@@ -6,6 +6,6 @@ module.exports = function(config) {
     testRunner: "jest",
     transpilers: [],
     coverageAnalysis: "off",
-    mutate: ["app/routes/**/*.js"]
+    mutate: ["app/routes/api/message.js"]
   });
 };
