@@ -1,8 +1,5 @@
 {
   "name": "AuthService",
-  "jest": {
-    "testPathIgnorePatterns": ["/node_modules/", "/.stryker-tmp/"]
-  },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

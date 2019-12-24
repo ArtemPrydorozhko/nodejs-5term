@@ -23,6 +23,10 @@ const Message = sequelize.define("message", {
     time: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    chatId: {
+        type: Sequelize.INTEGER,
+        allowNull: true
     }
 });
 
