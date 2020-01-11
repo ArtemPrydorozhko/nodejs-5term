@@ -21,13 +21,9 @@ services:
         ports: 
             - '3000:80'
         environment: 
-            - AUTHPORT=${AUTHPORT}
-            - USERPORT=${USERPORT}
-            - CHATPORT=${CHATPORT}
+            - PORT=${PORT}
         depends_on: 
-            - authservice
-            - userservice
-            - chatservice
+            - service
     # client:
     #     build:
     #         context: ./client
@@ -35,45 +31,17 @@ services:
     #     volumes:
     #         - /usr/app/node_modules
     #         - ./client:/usr/app
-    authservice:
+    service:
         build: 
-            context: ./AuthService
+            context: ./server
             dockerfile: Dockerfile.dev
         restart: always
         env_file: ./.env
         ports: 
-            - ${AUTHPORT}:${AUTHPORT}
+            - ${PORT}:${PORT}
         volumes:
             - /usr/app/node_modules
-            - ./AuthService:/usr/app
-        depends_on: 
-            - db
-            - redis
-    userservice:
-        build: 
-            context: ./UserService
-            dockerfile: Dockerfile.dev
-        restart: always
-        env_file: ./.env
-        ports: 
-            - ${USERPORT}:${USERPORT}
-        volumes:
-            - /usr/app/node_modules
-            - ./UserService:/usr/app
-        depends_on: 
-            - db
-            - redis
-    chatservice:
-        build: 
-            context: ./ChatService
-            dockerfile: Dockerfile.dev
-        restart: always
-        env_file: ./.env
-        ports: 
-            - ${CHATPORT}:${CHATPORT}
-        volumes:
-            - /usr/app/node_modules
-            - ./ChatService:/usr/app
+            - ./server:/usr/app
         depends_on: 
             - db
             - redis
