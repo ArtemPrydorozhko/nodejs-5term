@@ -19,37 +19,15 @@ services:
         ports: 
             - '3000:80'
         environment: 
-            - AUTHPORT=${AUTHPORT}
-            - USERPORT=${USERPORT}
-            - CHATPORT=${CHATPORT}
+            - PORT=${PORT}
         depends_on: 
-            - authservice
-            - userservice
-            - chatservice
-    authservice:
-        build: ./AuthService
+            - service
+    service:
+        build: ./server
         restart: always
         env_file: ./.env
         ports: 
-            - ${AUTHPORT}:${AUTHPORT}
-        depends_on: 
-            - db
-            - redis
-    userservice:
-        build: ./UserService
-        restart: always
-        env_file: ./.env
-        ports: 
-            - ${USERPORT}:${USERPORT}
-        depends_on: 
-            - db
-            - redis
-    chatservice:
-        build: ./ChatService
-        restart: always
-        env_file: ./.env
-        ports: 
-            - ${CHATPORT}:${CHATPORT}
+            - ${PORT}:${PORT}
         depends_on: 
             - db
             - redis
