@@ -31,7 +31,9 @@ app.use(auth);
 app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
         res.status(401).json({ error: 'invalid token' });
+        return;
     }
+    next(err);
 });
 
 app.use('/api/chatservice', chatRoutes);
@@ -43,6 +45,10 @@ app.use('/api/userservice', likeRoutes);
 app.use('/api/userservice', commentRoutes);
 app.use('/api/userservice', friendRoutes);
 app.use('/api/userservice', groupRoutes);
+app.use(function (err, req, res, next) {
+
+    res.status(500).json({ error: err.message });
+})
 
 if (process.env.NODE_ENV != 'test') {
     io.of('/api/chatservice').on('connection', socketHandler);

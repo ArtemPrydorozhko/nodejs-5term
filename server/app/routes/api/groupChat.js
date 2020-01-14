@@ -2,84 +2,50 @@ const express = require('express');
 const router = express.Router();
 
 const GroupChat = require('../../database/dao/groupChat');
+const { wrapAsync } = require('../../utils/asyncWrapper');
 
-router.get('/groupChat/all', async (req, res) => {
-    try {
-        const chats = await GroupChat.getGroupChats();
+router.get('/groupChat/all', wrapAsync(async (req, res) => {
+    const chats = await GroupChat.getGroupChats();
 
-        res.status(200).json(chats);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(chats);
+}));
 
-router.get('/groupChat', async (req, res) => {
-    try {
-        const chats = await GroupChat.getGroupChatsByUserId(req.user.id);
+router.get('/groupChat', wrapAsync(async (req, res) => {
+    const chats = await GroupChat.getGroupChatsByUserId(req.user.id);
 
-        res.status(200).json(chats);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(chats);
+}));
 
-router.get('/groupChat/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const chat = await GroupChat.getGroupChatById(id);
+router.get('/groupChat/:id', wrapAsync(async (req, res) => {
+    const id = req.params.id;
+    const chat = await GroupChat.getGroupChatById(id);
 
-        res.status(200).json(chat);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(chat);
+}));
 
-router.delete('/groupChat/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const chat = await GroupChat.deleteGroupChat(id);
+router.delete('/groupChat/:id', wrapAsync(async (req, res) => {
+    const id = req.params.id;
+    const chat = await GroupChat.deleteGroupChat(id);
 
-        res.status(200).json(chat);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(chat);
+}));
 
-router.post('/groupChat', async (req, res) => {
-    try {
-        const chat = await GroupChat.createGroupChat(req.user.id, req.body.name);
+router.post('/groupChat', wrapAsync(async (req, res) => {
+    const chat = await GroupChat.createGroupChat(req.user.id, req.body.name);
 
-        res.status(200).json(chat);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(chat);
+}));
 
-router.put('/groupChat/:id/addUser/:userId', async (req, res) => {
-    try {
-        const chat = await GroupChat.addUserToGroupChat(req.params.id, req.params.userId);
+router.put('/groupChat/:id/addUser/:userId', wrapAsync(async (req, res) => {
+    const chat = await GroupChat.addUserToGroupChat(req.params.id, req.params.userId);
 
-        res.status(200).json(chat);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(chat);
+}));
 
-router.put('/groupChat/:id', async (req, res) => {
-    try {
-        const chat = await GroupChat.updateGroupChat(req.user.id, req.body);
+router.put('/groupChat/:id', wrapAsync(async (req, res) => {
+    const chat = await GroupChat.updateGroupChat(req.user.id, req.body);
 
-        res.status(200).json(chat);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(chat);
+}));
 
 module.exports = router;

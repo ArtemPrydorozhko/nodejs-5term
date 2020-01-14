@@ -2,100 +2,58 @@ const express = require('express');
 const router = express.Router();
 
 const Group = require('../../database/dao/group');
+const { wrapAsync } = require('../../utils/asyncWrapper');
 
-router.get('/group/all', async (req, res) => {
-    try {
-        const groups = await Group.getGroups();
-        console.log(groups);
-        res.status(200).json(groups);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+router.get('/group/all', wrapAsync(async (req, res) => {
+    const groups = await Group.getGroups();
 
-router.get('/group', async (req, res) => {
-    try {
-        const groups = await Group.getGroupsByUserId(req.user.id);
-        console.log(groups);
-        
-        res.status(200).json(groups);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(groups);
+}));
 
-router.get('/group/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const group = await Group.getGroupById(id);
-        console.log(group);
-        res.status(200).json(group);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+router.get('/group', wrapAsync(async (req, res) => {
+    const groups = await Group.getGroupsByUserId(req.user.id);
 
-router.put('/group/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const group = await Group.updateGroup(req.body, id);
-        
-        res.status(200).json(group);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(groups);
+}));
 
-router.delete('/group/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const post = await Group.deleteGroup(id);
+router.get('/group/:id', wrapAsync(async (req, res) => {
+    const id = req.params.id;
+    const group = await Group.getGroupById(id);
 
-        res.status(200).json(post);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(group);
+}));
 
-router.post('/group/:id/removeUser', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const result = await Group.removeUserFromGroup(id, req.body.userId);
+router.put('/group/:id', wrapAsync(async (req, res) => {
+    const id = req.params.id;
+    const group = await Group.updateGroup(req.body, id);
 
-        res.status(200).json(result);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(group);
+}));
 
-router.post('/group/:id/addUser', async (req, res) => {
-    try {
-        const result = await Group.addUserToGroup(req.params.id, req.user.id);
-        console.log(result);
+router.delete('/group/:id', wrapAsync(async (req, res) => {
+    const id = req.params.id;
+    const post = await Group.deleteGroup(id);
 
-        res.status(200).json(result);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(post);
+}));
 
-router.post('/group', async (req, res) => {
-    try {
-        const result = await Group.createGroup(req.user.id, req.body.name);
-        console.log(result);
+router.post('/group/:id/removeUser', wrapAsync(async (req, res) => {
+    const id = req.params.id;
+    const result = await Group.removeUserFromGroup(id, req.body.userId);
 
-        res.status(200).json(result);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+    res.status(200).json(result);
+}));
+
+router.post('/group/:id/addUser', wrapAsync(async (req, res) => {
+    const result = await Group.addUserToGroup(req.params.id, req.user.id);
+
+    res.status(200).json(result);
+}));
+
+router.post('/group', wrapAsync(async (req, res) => {
+    const result = await Group.createGroup(req.user.id, req.body.name);
+
+    res.status(200).json(result);
+}));
 
 module.exports = router;

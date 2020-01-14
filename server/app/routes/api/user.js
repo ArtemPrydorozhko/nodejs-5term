@@ -2,53 +2,35 @@ const express = require('express');
 const router = express.Router();
 
 const User = require('../../database/dao/user');
+const { wrapAsync } = require('../../utils/asyncWrapper');
 
-router.get('/user/', async (req, res) => {
-    try {
-        const users = await User.getUsers();
-        console.log(users);
-        
-        res.status(200).json(users);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+router.get('/user/', wrapAsync(async (req, res) => {
+    const users = await User.getUsers();
 
-router.get('/user/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const user = await User.getUserById(id);
+    res.status(200).json(users);
+}));
 
-        res.status(200).json(user);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+router.get('/user/:id', wrapAsync(async (req, res) => {
+    const id = req.params.id;
+    const user = await User.getUserById(id);
 
-router.put('/user/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const user = await User.updateUser(req.body, id);
+    res.status(200).json(user);
+}));
 
-        res.status(200).json(user);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+router.put('/user/:id', wrapAsync(async (req, res) => {
+    const id = req.params.id;
+    const user = await User.updateUser(req.body, id);
 
-router.delete('/user/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const post = await User.deleteUser(id);
+    res.status(200).json(user);
+}));
 
-        res.status(200).json(post);
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ error: error.message });
-    }
-});
+router.delete('/user/:id', wrapAsync(async (req, res) => {
+
+    const id = req.params.id;
+    const post = await User.deleteUser(id);
+
+    res.status(200).json(post);
+
+}));
 
 module.exports = router;
