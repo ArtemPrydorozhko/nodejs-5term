@@ -91,7 +91,7 @@ describe('Userservice:: friend routes', () => {
         test('should not return friend with given NaNid', (done) => {
             request(app).get('/api/userservice/friend/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -127,7 +127,7 @@ describe('Userservice:: friend routes', () => {
         test('should not delete friend with NaN id', (done) => {
             request(app).delete('/api/userservice/friend/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -145,7 +145,7 @@ describe('Userservice:: friend routes', () => {
         test('should not create user friend', (done) => {
             request(app).post('/api/userservice/friend').send({}).then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });

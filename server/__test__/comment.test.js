@@ -87,7 +87,7 @@ describe('Userservice:: comment routes', () => {
         test('should not return pocommentst with given NaNid', (done) => {
             request(app).get('/api/userservice/comment/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -123,7 +123,7 @@ describe('Userservice:: comment routes', () => {
         test('should not delete comment with NaN id', (done) => {
             request(app).delete('/api/userservice/comment/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -141,7 +141,7 @@ describe('Userservice:: comment routes', () => {
         test('should not update comment data', (done) => {
             request(app).put('/api/userservice/comment/error').send({ type: 'discomment' }).then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });

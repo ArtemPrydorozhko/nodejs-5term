@@ -101,7 +101,7 @@ describe('Userservice:: message routes', () => {
         test('should not return message with given NaNid', (done) => {
             request(app).get('/api/chatservice/message/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -127,7 +127,7 @@ describe('Userservice:: message routes', () => {
         test('should not delete message with NaN id', (done) => {
             request(app).delete('/api/chatservice/message/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -145,7 +145,7 @@ describe('Userservice:: message routes', () => {
         test('should not update message data', (done) => {
             request(app).put('/api/chatservice/message/error').send({ text: 'newEmail' , chatId: 1}).then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });

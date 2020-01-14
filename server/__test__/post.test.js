@@ -97,7 +97,7 @@ describe('Userservice:: post routes', () => {
         test('should not return post with given NaNid', (done) => {
             request(app).get('/api/userservice/post/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -115,7 +115,7 @@ describe('Userservice:: post routes', () => {
         test('should not return post with given NaN groupid', (done) => {
             request(app).get('/api/userservice/post/group/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -133,7 +133,7 @@ describe('Userservice:: post routes', () => {
         test('should not return post with given NaN userid', (done) => {
             request(app).get('/api/userservice/post/group/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -159,7 +159,7 @@ describe('Userservice:: post routes', () => {
         test('should not delete post with NaN id', (done) => {
             request(app).delete('/api/userservice/post/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -177,7 +177,7 @@ describe('Userservice:: post routes', () => {
         test('should not update post data', (done) => {
             request(app).put('/api/userservice/post/error').send({ text: 'newEmail' }).then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -195,7 +195,7 @@ describe('Userservice:: post routes', () => {
         test('should not create user post', (done) => {
             request(app).post('/api/userservice/post').send({}).then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -211,7 +211,7 @@ describe('Userservice:: post routes', () => {
         test('should not create group post', (done) => {
             request(app).post('/api/userservice/post/group/nan').send({}).then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });

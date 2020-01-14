@@ -87,7 +87,7 @@ describe('Userservice:: like routes', () => {
         test('should not return polikest with given NaNid', (done) => {
             request(app).get('/api/userservice/like/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -123,7 +123,7 @@ describe('Userservice:: like routes', () => {
         test('should not delete like with NaN id', (done) => {
             request(app).delete('/api/userservice/like/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -141,7 +141,7 @@ describe('Userservice:: like routes', () => {
         test('should not update like data', (done) => {
             request(app).put('/api/userservice/like/error').send({ type: 'dislike' }).then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -159,7 +159,7 @@ describe('Userservice:: like routes', () => {
         test('should not create user like', (done) => {
             request(app).post('/api/userservice/like').send({}).then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });

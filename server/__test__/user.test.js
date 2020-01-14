@@ -69,7 +69,7 @@ describe('Userservice:: user routes', () => {
         test('should not return user with given NaNid', (done) => {
             request(app).get('/api/userservice/user/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -95,7 +95,7 @@ describe('Userservice:: user routes', () => {
         test('should not delete user with NaN id', (done) => {
             request(app).delete('/api/userservice/user/nan').then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
@@ -113,7 +113,7 @@ describe('Userservice:: user routes', () => {
         test('should not update user data', (done) => {
             request(app).put('/api/userservice/user/error').send({ email: 'newEmail' }).then((response) => {
 
-                expect(response.status).toBe(400);
+                expect(response.status).toBe(500);
                 done();
             });
         });
